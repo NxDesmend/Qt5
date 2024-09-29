@@ -1,2 +1,3 @@
 # Qt5
-1.primaryMathematicsTest，一个小学数学试卷
+1.primaryMathematicsTest. A primary school math exam paper
+2.QtExcel. 
