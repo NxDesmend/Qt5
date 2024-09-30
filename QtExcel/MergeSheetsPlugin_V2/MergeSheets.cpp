@@ -16,7 +16,7 @@ MergeSheets::~MergeSheets() {
 }
 
 QString MergeSheets::title() {
-	return this->metaObject()->className();
+	return " MergeSheetsEx";
 }
 
 QString MergeSheets::version() {
