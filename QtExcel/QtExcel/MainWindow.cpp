@@ -43,15 +43,19 @@ void MainWindow::closeEvent(QCloseEvent* event)
 void MainWindow::populatePluginsMenu() {
     // Load all plugins and populate the menus
     QDir pluginsDir(qApp->applicationDirPath() + PLUGINS_SUBFOLDER);
-    QFileInfoList pluginFiles = pluginsDir.entryInfoList(QDir::NoDotAndDotDot | QDir::Files, QDir::Name);
+    QFileInfoList pluginFiles = pluginsDir.entryInfoList(
+        QDir::NoDotAndDotDot | QDir::Files, QDir::Name);
     foreach(QFileInfo pluginFile, pluginFiles)
     {
         if (QLibrary::isLibrary(pluginFile.absoluteFilePath())) {
             QPluginLoader pluginLoader(pluginFile.absoluteFilePath(), this);
-            if (EXPluginInterface* plugin = dynamic_cast<EXPluginInterface*>(pluginLoader.instance())) {
+            if (EXPluginInterface* plugin = dynamic_cast<EXPluginInterface*>(
+                pluginLoader.instance())) {
                 QAction* pluginAction = ui.menuPlugins->addAction(plugin->title());
-                pluginAction->setProperty(FILE_ON_DISK_DYNAMIC_PROPERTY.toStdString().c_str(), pluginFile.absoluteFilePath());
-                connect(pluginAction, SIGNAL(triggered(bool)), this, SLOT(onPluginActionTriggered(bool)));
+                pluginAction->setProperty(FILE_ON_DISK_DYNAMIC_PROPERTY.toStdString().c_str(), 
+                    pluginFile.absoluteFilePath());
+                connect(pluginAction, SIGNAL(triggered(bool)), this,
+                    SLOT(onPluginActionTriggered(bool)));
                 if (currentPluginFile == pluginFile.absoluteFilePath())
                 {
                     pluginAction->trigger();
@@ -73,7 +77,8 @@ void MainWindow::populatePluginsMenu() {
     }
     if (ui.menuPlugins->actions().count() <= 0)
     {
-        QMessageBox::critical(this, tr("No Plugins"), QString(tr("This application cannot work without plugins!"
+        QMessageBox::critical(this, tr("No Plugins"), QString(
+            tr("This application cannot work without plugins!"
             "<br>Make sure that %1 folder exists "
             "in the same folder as the application<br>and that "
             "there are some filter plugins inside it")).arg(PLUGINS_SUBFOLDER));
@@ -88,16 +93,19 @@ void MainWindow::onPluginActionTriggered(bool) {
         delete currentPluginGui;
     }
 
-    currentPluginFile = QObject::sender()->property(FILE_ON_DISK_DYNAMIC_PROPERTY.toStdString().c_str()).toString();
+    currentPluginFile = QObject::sender()->property(
+        FILE_ON_DISK_DYNAMIC_PROPERTY.toStdString().c_str()).toString();
     currentPlugin = new QPluginLoader(currentPluginFile, this);
     currentPluginGui = new QWidget(this);
     ui.pluginLayout->addWidget(currentPluginGui);
 
-    EXPluginInterface* currentPluginInstance = dynamic_cast<EXPluginInterface*>(currentPlugin->instance());
+    EXPluginInterface* currentPluginInstance = 
+        dynamic_cast<EXPluginInterface*>(currentPlugin->instance());
     if (currentPluginInstance)
     {
         currentPluginInstance->init(currentPluginGui);
-        connect(currentPlugin->instance(), SIGNAL(updateNeeded(QString)), this, SLOT(onCurrentPluginUpdateNeeded(QString)));
+        connect(currentPlugin->instance(), SIGNAL(
+            updateNeeded(QString)), this, SLOT(onCurrentPluginUpdateNeeded(QString)));
     }
 }
 
