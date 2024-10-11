@@ -27,7 +27,8 @@ void MainWindow::saveSettings() {
 
 void MainWindow::closeEvent(QCloseEvent* event)
 {
-    int result = QMessageBox::warning(this, tr("Exit"), tr("Are you sure you want to exit?"), QMessageBox::Yes, QMessageBox::No);
+    int result = QMessageBox::warning(this, tr("Exit"),
+        tr("Are you sure you want to exit?"), QMessageBox::Yes, QMessageBox::No);
     if (result == QMessageBox::Yes)
     {
         saveSettings();
