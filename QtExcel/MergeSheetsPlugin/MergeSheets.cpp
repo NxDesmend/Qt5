@@ -4,9 +4,7 @@
 
 const QString DEST_SHEET_NAME = "myMergeSheet";
 
-MergeSheets::MergeSheets()
-{
-	
+MergeSheets::MergeSheets() {
 }
 
 MergeSheets::~MergeSheets() {
