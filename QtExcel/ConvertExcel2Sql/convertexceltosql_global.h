@@ -1,0 +1,16 @@
+﻿#ifndef CONVERTEXCELTOSQL_GLOBAL_H
+#define CONVERTEXCELTOSQL_GLOBAL_H
+
+#include <QtCore/qglobal.h>
+
+#ifndef BUILD_STATIC
+# if defined(CONVERTEXCELTOSQL_LIB)
+#  define CONVERTEXCELTOSQL_EXPORT Q_DECL_EXPORT
+# else
+#  define CONVERTEXCELTOSQL_EXPORT Q_DECL_IMPORT
+# endif
+#else
+# define CONVERTEXCEL2SQL_EXPORT
+#endif
+
+#endif
